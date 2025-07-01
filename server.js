@@ -4,39 +4,50 @@ import dotenv from 'dotenv';
 import morgan from 'morgan';
 import connectDB from './config/db.js';
 import authRoutes from './routes/authRoute.js';
-import categoryRoutes from './routes/categoryRoutes.js'
-import productRoutes from './routes/productRoutes.js'
-import cors from 'cors'
+import categoryRoutes from './routes/categoryRoutes.js';
+import productRoutes from './routes/productRoutes.js';
+import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-//configure env
+// Handle __dirname in ES Module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Configure environment variables
 dotenv.config();
 
-//database config
+// Connect to database
 connectDB();
 
 const app = express();
 
-//middleware
+// Middleware
 app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
-//routes
+// API Routes
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/category', categoryRoutes);
 app.use('/api/v1/product', productRoutes);
 
-
-//rest api
+// Basic route
 app.get('/', (req, res) => {
-    console.log('GET / route was called');
-    res.send("<h1>Welcome to  ecommerse app</h1>");
+    res.send('<h1>Welcome to the E-commerce App API</h1>');
 });
 
+// Serve static files in production
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, './client/build')));
 
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, './client/build/index.html'));
+    });
+}
 
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-    console.log(`server running on ${PORT}`.bgCyan.white);
+    console.log(`Server running on port ${PORT}`.bgCyan.white);
 });
