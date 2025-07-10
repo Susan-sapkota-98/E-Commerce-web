@@ -8,7 +8,7 @@ export const registerController = async (req, res) => {
     try {
         const { name, email, password, phone, address, answer } = req.body;
 
-        // validations
+        // check validations
         if (!name) return res.status(400).send({ message: 'Name is Required' });
         if (!email) return res.status(400).send({ message: 'Email is Required' });
         if (!password) return res.status(400).send({ message: 'Password is Required' });
@@ -53,7 +53,7 @@ export const registerController = async (req, res) => {
     }
 };
 
-//Post login
+//Post login section
 export const loginController = async (req, res) => {
     try {
         const { email, password } = req.body
@@ -142,7 +142,7 @@ export const forgotPasswordController = async (req, res) => {
     }
 
 }
-//test controller
+//test controller section
 export const testController = (req, res) => {
     try {
         res.send('Protected Routes');
@@ -156,7 +156,7 @@ export const updateProfileController = async (req, res) => {
         const { name, email, password, address, phone } = req.body
         const user = await userModel.findById(req.user._id)
 
-        // password
+        // password section
         if (password && password.length < 6) {
             return res.json({ error: 'password is required  and greater than 6 character' })
         }
@@ -185,7 +185,7 @@ export const updateProfileController = async (req, res) => {
     }
 }
 
-// order controler
+// order controller
 export const getOrdersController = async (req, res) => {
     try {
         const orders = await orderModel
