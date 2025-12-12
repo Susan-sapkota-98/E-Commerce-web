@@ -8,8 +8,8 @@ import categoryRoutes from './routes/categoryRoutes.js';
 import productRoutes from './routes/productRoutes.js';
 import cors from 'cors';
 import path from 'path'
-
-
+// import serverless from "serverless-http";
+// import app from "../server.js";
 // Configure environment variables
 dotenv.config();
 
@@ -17,6 +17,7 @@ dotenv.config();
 connectDB();
 
 const app = express();
+// export const handler = serverless(app);
 
 // Middleware
 app.use(cors());
