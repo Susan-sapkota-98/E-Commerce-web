@@ -9,7 +9,7 @@ const orderSchema = new mongoose.Schema({
         },
     ],
     buyer: { type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true }, // referenced buyer
-    status: { type: String, default: 'Pending' },
+    status: { type: String, default: 'Pending', enum:["Not process","Processing","Shipped","delivered","cancel"], },
     totalAmount: { type: Number, required: true },
     createdAt: { type: Date, default: Date.now },
 });
